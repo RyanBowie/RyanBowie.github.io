@@ -363,7 +363,7 @@ window.SITE = {
       title: 'How many people can use a Copilot Studio agent at once?',
       desc: 'Empirical load test of a Copilot Studio agent published to Microsoft 365 Copilot: where the limits actually are, and why throttles arrive as HTTP 200 successes.',
       lang: 'HTML', ext: '.html', cat: 'benchmark', pushed: '2026-10-20',
-      site: 'https://ryanbowie.github.io/copilot-studio-load-test/',
+      site: '/copilot-studio-load-test/',
       agent: { harness: ['standard'], note: 'Scope: standard harness only. The limits are not assumed to apply to the other harness.' },
       feature: {
         order: 3, kicker: 'Load test', stat: '140,405',
@@ -378,7 +378,7 @@ window.SITE = {
       title: 'Cat Benchmarks',
       desc: 'Interactive 3D cat benchmarks: one prompt, many AI models.',
       lang: 'HTML', ext: '.html', cat: 'benchmark', pushed: '2026-11-18',
-      site: 'https://ryanbowie.github.io/cat-benchmarks/',
+      site: '/cat-benchmarks/',
       feature: {
         order: 1, kicker: 'A bit of fun', stat: '5.9/10',
         cap: 'is the best cat so far. One prompt, thirteen models, harsh marking.',
@@ -392,7 +392,7 @@ window.SITE = {
           tag: '5.9 / 10',
           video: 'assets/media/cat-opus-5.5-copilot.mp4',
           still: 'assets/media/cat-opus-5.5-copilot.jpg',
-          live: 'https://ryanbowie.github.io/cat-benchmarks/cats/claude-opus-5.5-copilot/'
+          live: '/cat-benchmarks/cats/claude-opus-5.5-copilot/'
         }
       }
     },
@@ -401,7 +401,7 @@ window.SITE = {
       title: 'Cathedral Benchmarks',
       desc: 'Interactive 3D Cologne Cathedral managed-app benchmarks: one research pack, one prompt, many AI models.',
       lang: 'JavaScript', ext: '.js', cat: 'benchmark', pushed: '2026-11-20',
-      site: 'https://ryanbowie.github.io/cathedral-benchmarks/',
+      site: '/cathedral-benchmarks/',
       feature: {
         order: 1.5, kicker: 'Sister benchmark', stat: '7.5/10',
         cap: 'is the best Cologne Cathedral so far. One research pack, seven models.',
@@ -413,7 +413,7 @@ window.SITE = {
           label: 'GPT-6 Astra · GitHub Copilot app',
           tag: '7.5 / 10',
           still: 'assets/media/cathedral-gpt-6-astra.jpg',
-          live: 'https://ryanbowie.github.io/cathedral-benchmarks/builds/gpt-6-astra/',
+          live: '/cathedral-benchmarks/builds/gpt-6-astra/',
           foot: ['model-built 3D cathedral', 'explore it']
         }
       }
@@ -423,7 +423,7 @@ window.SITE = {
       title: 'Copilot Cowork managed-app benchmark',
       desc: 'Evidence-led Copilot Cowork managed-app costs, time, capabilities and model/effort comparisons.',
       lang: 'HTML', ext: '.html', cat: 'benchmark', pushed: '2026-10-20',
-      site: 'https://ryanbowie.github.io/copilot-cowork-app-benchmark/',
+      site: '/copilot-cowork-app-benchmark/',
       feature: {
         order: 4, kicker: 'Benchmark', stat: '49',
         cap: 'app builds measured for cost, time and capability',
@@ -437,7 +437,7 @@ window.SITE = {
       title: 'AI video creation guide',
       desc: 'Community guide: make code-drawn animated videos with one prompt using Claude Opus 5.5 in the GitHub Copilot app.',
       lang: 'JavaScript', ext: '.js', cat: 'guide', pushed: '2026-10-20',
-      site: 'https://ryanbowie.github.io/ai-video-creation-guide/',
+      site: '/ai-video-creation-guide/',
       feature: {
         order: 2, kicker: 'Guide', stat: '1',
         cap: 'prompt per video. Every frame is drawn in code.',
@@ -451,7 +451,7 @@ window.SITE = {
       title: 'Copilot Studio + Power BI',
       desc: 'A standard Copilot Studio agent that generates DAX, queries Power BI semantic models as the user, and explains results. No Fabric data agent required.',
       lang: 'Python', ext: '.py', cat: 'reference', pushed: '2026-10-20',
-      site: 'https://ryanbowie.github.io/copilot-studio-powerbi-agent/',
+      site: '/copilot-studio-powerbi-agent/',
       agent: { harness: ['standard'], note: 'Built in Copilot Studio, used inside Microsoft 365 Copilot.' },
       feature: {
         order: 5, kicker: 'Agent', stat: 'DAX',
@@ -466,7 +466,7 @@ window.SITE = {
       title: 'SharePoint Search Hub',
       desc: 'Copilot Studio SharePoint hub-and-spoke search reference: caller-checked results, private Excel export, verified 512-item demo, architecture and unmanaged solution.',
       lang: 'Python', ext: '.py', cat: 'reference', pushed: '2026-11-15',
-      site: 'https://ryanbowie.github.io/copilot-studio-sharepoint-search-hub/',
+      site: '/copilot-studio-sharepoint-search-hub/',
       agent: { harness: ['standard'], note: 'Built in Copilot Studio, not Agent Builder.' },
       feature: {
         order: 6, kicker: 'Reference build', stat: '512',
@@ -481,7 +481,7 @@ window.SITE = {
       title: 'Custom Agent Reporting Architecture',
       desc: 'Reference architecture for custom tenant-wide AI agent reporting (Copilot Studio, Agent Builder, SharePoint agents, Microsoft Foundry). Documentation only.',
       lang: null, ext: '.md', cat: 'reference', pushed: '2026-10-20',
-      site: 'https://ryanbowie.github.io/custom-agent-reporting-architecture/',
+      site: '/custom-agent-reporting-architecture/',
       feature: {
         order: 7, kicker: 'Architecture', stat: '4',
         cap: 'agent platforms in one tenant-wide report',
@@ -495,7 +495,7 @@ window.SITE = {
       title: 'Solution Reviewer',
       desc: 'Copilot Studio solution reviewer walkthrough with a real canvas-app example, detailed output and setup guidance.',
       lang: 'HTML', ext: '.html', cat: 'reference', pushed: '2026-10-20',
-      site: 'https://ryanbowie.github.io/copilot-studio-powerplatform-solution-reviewer-site/',
+      site: '/copilot-studio-powerplatform-solution-reviewer-site/',
       agent: { harness: ['standard'], note: 'Importable reviewer and automation solutions.' }
     },
     {
@@ -503,7 +503,7 @@ window.SITE = {
       title: 'Copilot Studio Documentation Builder',
       desc: 'Template-aligned technical documentation with Copilot Studio: Standard and Microsoft Copilot harness examples, implementation guidance and observed results.',
       lang: 'Python', ext: '.py', cat: 'reference', pushed: '2026-10-20',
-      site: 'https://ryanbowie.github.io/copilot-studio-documentation-builder/',
+      site: '/copilot-studio-documentation-builder/',
       agent: { harness: ['standard', 'mch'], note: 'Examples and observed results on both harnesses.' }
     },
     {
@@ -511,7 +511,7 @@ window.SITE = {
       title: 'Engineering evidence review with Copilot Studio',
       desc: 'Copilot Studio Microsoft Copilot-harness reference: source-faithful engineering evidence, real file outputs and indicative dated test credits.',
       lang: 'Python', ext: '.py', cat: 'reference', pushed: '2026-11-15',
-      site: 'https://ryanbowie.github.io/copilot-studio-engineering-evidence/',
+      site: '/copilot-studio-engineering-evidence/',
       agent: { harness: ['mch'], note: 'Large-file inferencing across 53 files and about 2,590 pages.' },
       feature: {
         order: 4.5, kicker: 'Harness reference', stat: '2,590',
@@ -526,21 +526,21 @@ window.SITE = {
       title: 'Copilot Interaction Logging',
       desc: 'Documentation-only build guide: collect Microsoft Purview CopilotInteraction audit records into Dataverse with Power Automate and the Microsoft Graph audit log query API.',
       lang: null, ext: '.md', cat: 'guide', pushed: '2026-10-20',
-      site: 'https://ryanbowie.github.io/copilot-interaction-logging/'
+      site: '/copilot-interaction-logging/'
     },
     {
       name: 'slack-to-teams-migration-kit',
       title: 'Slack-to-Teams migration demonstrations',
       desc: 'Slack-to-Teams migration demonstrations with GitHub Copilot: screenshots, workflow, measured costs and limitations. Documentation only.',
       lang: 'HTML', ext: '.html', cat: 'guide', pushed: '2026-10-20',
-      site: 'https://ryanbowie.github.io/slack-to-teams-migration-kit/'
+      site: '/slack-to-teams-migration-kit/'
     },
     {
       name: 'universe-fx-kit',
       title: 'universe-fx-kit',
       desc: 'Showcase: cursor trail, text decode, octopus mascot, scroll reveal and a mini game for GitHub Pages. Dependency-free vanilla JS and CSS.',
       lang: 'JavaScript', ext: '.js', cat: 'tool', pushed: '2026-10-20',
-      site: 'https://ryanbowie.github.io/universe-fx-kit/'
+      site: '/universe-fx-kit/'
     },
     {
       name: 'copilot-autoharness',

@@ -16,7 +16,15 @@
   const fmtDate = iso => new Date(iso + 'T12:00:00Z').toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' });
   const repoUrl = r => `${D.owner.github}/${r.name}`;
   const ARROW = '<svg class="arr" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M4 12 12 4M5.5 4H12v6.5" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>';
+  const ARROW_DOWN = '<svg class="arr" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M8 2.5v10.5M3.5 8.5 8 13l4.5-4.5" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>';
   const PALETTE = ['#583af7', '#ae85ff', '#f73678', '#c05200', '#bba00a', '#5fed83', '#180e27'];
+  // project sites live on this domain at /<repo>/; when previewing elsewhere (localhost) load them from the live domain
+  const SITE_BASE = /(^|\.)ryanbow230\.com$/.test(location.hostname) ? '' : 'https://ryanbow230.com';
+  const siteHref = path => SITE_BASE + path;
+  // a link that opens a project inside the page (the explorer panel under Work) instead of a new tab
+  const exploreLink = (path, label, cls, inner) =>
+    `<a class="${cls}" href="${siteHref(path)}" data-explore="${esc(path)}" data-label="${esc(label)}">${inner}</a>`;
+
   // the harnesses a repo's agent runs on (unknown keys are ignored), defined once in data.js
   const harnessOf = r => (r.agent ? r.agent.harness : []).filter(k => D.harnesses[k]);
 
@@ -47,7 +55,14 @@
     const latest = [...D.repos].sort((a, b) => b.pushed.localeCompare(a.pushed))[0];
     const msg = $('#ticker-msg');
     msg.textContent = `latest push: ${latest.name}, ${fmtDate(latest.pushed)} ↗`;
-    msg.href = latest.site || repoUrl(latest);
+    if (latest.site) {
+      msg.href = siteHref(latest.site);
+      msg.dataset.explore = latest.site;
+      msg.dataset.label = latest.title;
+      msg.removeAttribute('target');
+    } else {
+      msg.href = repoUrl(latest);
+    }
   }
 
   /* ─────────────── nav ─────────────── */
@@ -373,7 +388,7 @@
 
     // a project can show a real clip of its output instead of drawn artwork
     const clip = m =>
-      `<a class="clip" href="${m.live}" target="_blank" rel="noopener" aria-label="Open the live ${esc(m.label)} result">
+      `<a class="clip" href="${siteHref(m.live)}" data-explore="${esc(m.live)}" data-label="${esc(m.label)}" aria-label="Explore the ${esc(m.label)} result here">
         <span class="clip__bar"><span>${esc(m.label)}</span><span>${esc(m.tag)}</span></span>
         ${m.video
           ? `<video class="clip__video" src="${m.video}" poster="${m.still}" muted loop playsinline preload="metadata"${reduce ? '' : ' autoplay'}></video>`
@@ -439,7 +454,7 @@
       const hchips = harnessOf(r).map(k => { const h = D.harnesses[k]; return `<li class="fact-h" style="--c:${h.color};--on:${h.on}">${esc(h.label)}</li>`; }).join('');
       $('#st-facts').innerHTML = hchips + f.facts.map(t => `<li>${esc(t)}</li>`).join('');
       $('#st-cta').innerHTML =
-        (r.site ? `<a class="btn btn--accent" href="${r.site}" target="_blank" rel="noopener"><span>Open the live site</span>${ARROW}</a>` : '') +
+        (r.site ? exploreLink(r.site, r.title, 'btn btn--accent', `<span>More details</span>${ARROW_DOWN}`) : '') +
         `<a class="btn btn--ghost" href="${repoUrl(r)}" target="_blank" rel="noopener"><span>View the repository</span>${ARROW}</a>`;
     };
 
@@ -481,7 +496,7 @@
         </div>
         <div class="acard__foot">
           <span class="acard__tags">${badges}</span>
-          <span class="acard__links">${r.site ? `<a class="mini" href="${r.site}" target="_blank" rel="noopener">site ↗</a>` : ''}<a class="mini" href="${repoUrl(r)}" target="_blank" rel="noopener">repo ↗</a></span>
+          <span class="acard__links">${r.site ? exploreLink(r.site, r.title, 'mini', 'details ↓') : ''}<a class="mini" href="${repoUrl(r)}" target="_blank" rel="noopener">repo ↗</a></span>
         </div>
       </article>`;
     }).join('');
@@ -521,11 +536,13 @@
       const c = D.categories[r.cat];
       return `<div class="irow rv" data-cat="${r.cat}" data-agent="${harnessOf(r).length ? 1 : 0}" style="--c:${c.color}">
         <span class="irow__n mono">${pad(i + 1, 2)}</span>
-        <a class="irow__name" href="${r.site || repoUrl(r)}" target="_blank" rel="noopener">${esc(r.name)}<span class="ext">${r.ext}</span></a>
+        ${r.site
+          ? exploreLink(r.site, r.title, 'irow__name', `${esc(r.name)}<span class="ext">${r.ext}</span>`)
+          : `<a class="irow__name" href="${repoUrl(r)}" target="_blank" rel="noopener">${esc(r.name)}<span class="ext">${r.ext}</span></a>`}
         <span class="irow__desc">${esc(r.desc)}</span>
         <span class="irow__cat mono">${c.label}${harnessOf(r).length ? `<span class="irow__hs">${harnessOf(r).map(k => `<span class="irow__h"><i style="background:${D.harnesses[k].color}"></i>${esc(D.harnesses[k].short)}</span>`).join('')}</span>` : ''}</span>
         <span class="irow__date mono">${fmtDate(r.pushed)}</span>
-        <span class="irow__links">${r.site ? `<a class="mini" href="${r.site}" target="_blank" rel="noopener">site ↗</a>` : ''}<a class="mini" href="${repoUrl(r)}" target="_blank" rel="noopener">repo ↗</a></span>
+        <span class="irow__links">${r.site ? exploreLink(r.site, r.title, 'mini', 'details ↓') : ''}<a class="mini" href="${repoUrl(r)}" target="_blank" rel="noopener">repo ↗</a></span>
       </div>`;
     }).join('');
 
@@ -676,7 +693,51 @@
     }, { threshold: 0.45 }).observe(stage);
   }
 
+  /* ─────────────── project explorer: opens a project site inside the page, just under Work ─────────────── */
+  function initExplore() {
+    const panel = $('#explore'), frame = $('#explore-frame'), name = $('#explore-name');
+    const full = $('#explore-full'), repoLink = $('#explore-repo'), closeBtn = $('#explore-close');
+    let opener = null;
+    const repoOf = path => path.split('/').filter(Boolean)[0] || '';
+
+    const open = (path, label, from) => {
+      const url = siteHref(path);
+      opener = from || null;
+      name.textContent = path.replace(/^\/|\/$/g, '');
+      panel.setAttribute('aria-label', 'Exploring ' + label);
+      frame.title = label;
+      full.href = url;
+      repoLink.href = 'https://github.com/' + D.owner.handle + '/' + repoOf(path);
+      if (frame.getAttribute('src') !== url) { panel.classList.add('is-loading'); frame.src = url; }
+      panel.hidden = false;
+      panel.classList.remove('is-open'); void panel.offsetWidth; panel.classList.add('is-open');
+      try { history.replaceState(null, '', '#explore' + path.replace(/\/$/, '')); } catch (e) {}
+      panel.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+    };
+    const shut = () => {
+      panel.hidden = true;
+      frame.removeAttribute('src');                 // stops any video or 3D scene inside
+      try { history.replaceState(null, '', location.pathname + location.search); } catch (e) {}
+      if (opener && document.contains(opener)) opener.focus();
+    };
+
+    frame.addEventListener('load', () => panel.classList.remove('is-loading'));
+    closeBtn.addEventListener('click', shut);
+    addEventListener('keydown', e => { if (e.key === 'Escape' && !panel.hidden) shut(); });
+    document.addEventListener('click', e => {
+      const a = e.target.closest('a[data-explore]');
+      // ctrl/cmd/shift/middle clicks still open a real tab
+      if (!a || e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      e.preventDefault();
+      open(a.dataset.explore, a.dataset.label || a.textContent.trim(), a);
+    });
+
+    // deep link: ryanbow230.com/#explore/cat-benchmarks opens that project here
+    const m = location.hash.match(/^#explore(\/[\w.\-\/]+)$/);
+    if (m) open(m[1] + '/', m[1].slice(1));
+  }
+
   /* ─────────────── boot ─────────────── */
-  const boot = [initTheme, initTicker, initWordmarks, initViewer, initMarquee, initAgents, initIndex, initAbout, initReveals, initBand, initNav, initBot];
+  const boot = [initTheme, initTicker, initWordmarks, initViewer, initMarquee, initAgents, initIndex, initAbout, initReveals, initBand, initNav, initBot, initExplore];
   boot.forEach(fn => { try { fn(); } catch (err) { console.error('[site] ' + fn.name + ' failed:', err); } });
 })();

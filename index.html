@@ -144,6 +144,23 @@
   </div>
 </section>
 
+<!-- ───────── project explorer: a project site opened inside the page ───────── -->
+<section class="explore" id="explore" hidden aria-label="Project explorer">
+  <div class="wrap">
+    <div class="explore__bar">
+      <span class="mono explore__crumb">the-work <b>/</b> <em id="explore-name">project</em><b>/</b></span>
+      <span class="nav__sp"></span>
+      <a class="explore__btn" id="explore-full" href="#">Open full page <svg class="arr" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M4 12 12 4M5.5 4H12v6.5" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></a>
+      <a class="explore__btn" id="explore-repo" href="#" target="_blank" rel="noopener">Repo ↗</a>
+      <button class="explore__btn explore__close" id="explore-close" type="button" aria-label="Close the project">Close <span aria-hidden="true">✕</span></button>
+    </div>
+    <div class="explore__frame">
+      <span class="explore__loading mono">loading the project…</span>
+      <iframe id="explore-frame" title="Project"></iframe>
+    </div>
+  </div>
+</section>
+
 <div class="gap"><div class="wrap"></div></div>
 
 <!-- ───────── copilot studio agents ───────── -->
