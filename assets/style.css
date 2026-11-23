@@ -1,4 +1,8 @@
 /* ───────────────────────── tokens ───────────────────────── */
+/* fonts: self-hosted (SIL Open Font Licence), shared with the project sites via /rb/ */
+@font-face { font-family: "Mona Sans"; src: url("../rb/fonts/MonaSans-latin.woff2") format("woff2"); font-weight: 200 900; font-stretch: 75% 125%; font-display: swap; }
+@font-face { font-family: "JetBrains Mono"; src: url("../rb/fonts/JetBrainsMono-latin.woff2") format("woff2"); font-weight: 400 700; font-display: swap; }
+
 :root {
   --paper: #e9edec;
   --paper-2: #dde3df;
