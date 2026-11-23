@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="en-GB" data-theme="light" data-accent="green">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ryan Bowen · evidence over vibes</title>
+<meta name="description" content="Ryan Bowen runs real experiments on Copilot Studio, Power Platform and AI agents, then publishes the numbers, the method and the parts that didn't work.">
+<meta name="robots" content="noindex">
+<link rel="canonical" href="https://ryanbow230.com/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://ryanbow230.com/">
+<meta property="og:site_name" content="Ryan Bowen">
+<meta property="og:title" content="Ryan Bowen · evidence over vibes">
+<meta property="og:description" content="Ryan Bowen runs real experiments on Copilot Studio, Power Platform and AI agents, then publishes the numbers, the method and the parts that didn't work.">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Ryan Bowen · evidence over vibes">
+<meta name="twitter:description" content="Real experiments on Copilot Studio, Power Platform and AI agents, with the numbers, the method and the parts that didn't work.">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%230a0c0b'/%3E%3Crect x='18' y='6' width='8' height='8' fill='%235fed83'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Mona+Sans:wdth,wght@75..125,200..900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+<script>
+(function () {
+  var r = document.documentElement;
+  try {
+    var t = localStorage.getItem('rb-theme'), a = localStorage.getItem('rb-accent');
+    if (t) r.dataset.theme = t;
+    if (a) r.dataset.accent = a;
+  } catch (e) {}
+  r.classList.add('js');
+})();
+</script>
+</head>
+<body>
+<a class="skip" href="#work">Skip to the work</a>
+
+<!-- ───────── ticker ───────── -->
+<div class="ticker">
+  <a class="ticker__msg" id="ticker-msg" href="https://github.com/RyanBowie" target="_blank" rel="noopener">latest push: loading</a>
+</div>
+
+<!-- ───────── nav ───────── -->
+<header class="nav" id="nav">
+  <div class="wrap nav__in">
+    <a class="nav__logo" href="#top" aria-label="Ryan Bowen, back to top">RB<i></i></a>
+    <nav class="nav__links" id="nav-links" aria-label="Sections">
+      <a class="nav__link" href="#work">Work</a>
+      <a class="nav__link" href="#agents">Agents</a>
+      <a class="nav__link" href="#index">Index</a>
+      <a class="nav__link" href="#about">About</a>
+    </nav>
+    <span class="nav__sp"></span>
+    <button class="nav__tool" id="accent-btn" type="button" aria-label="Change accent colour" title="Change accent colour"><i class="swatch"></i></button>
+    <button class="nav__tool" id="theme-btn" type="button" aria-label="Switch between light and dark">
+      <svg viewBox="0 0 16 16" width="15" height="15" aria-hidden="true"><circle cx="8" cy="8" r="6.2" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M8 1.8a6.2 6.2 0 0 1 0 12.4z" fill="currentColor"/></svg>
+      <span id="theme-lab">Dark</span>
+    </button>
+    <button class="nav__tool nav__menu" id="menu-btn" type="button" aria-expanded="false" aria-controls="nav-links">Menu</button>
+    <a class="nav__cta" href="https://github.com/RyanBowie" target="_blank" rel="noopener">
+      <span>GitHub</span>
+      <svg class="arr" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M4 12 12 4M5.5 4H12v6.5" fill="none" stroke="currentColor" stroke-width="1.8"/></svg>
+    </a>
+  </div>
+  <i class="nav__progress" id="progress"></i>
+</header>
+
+<main>
+
+<!-- ───────── hero ───────── -->
+<section class="hero" id="top">
+  <div class="wrap">
+    <div class="hero__mark" data-fit>
+      <h1 class="wm" aria-label="Ryan Bowen">RYAN BOWEN</h1>
+    </div>
+
+    <div class="split hero__split">
+      <div class="hero__left">
+        <span class="lab" data-scramble>solution architect</span>
+        <h2 class="slug" data-type data-caret="keep">evidence-over-vibes/</h2>
+      </div>
+      <div class="hero__right">
+        <p class="hero__lede">I run real experiments on Copilot Studio, Power Platform and AI agents, then publish the lot: the numbers, the method and the parts that didn't work.</p>
+        <div class="cta2">
+          <a class="btn btn--accent" href="#work"><span>Browse the work</span><svg class="arr" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M4 12 12 4M5.5 4H12v6.5" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></a>
+          <a class="btn btn--ghost" href="https://github.com/RyanBowie" target="_blank" rel="noopener"><span>GitHub profile</span><svg class="arr" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M4 12 12 4M5.5 4H12v6.5" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="band" id="band" aria-hidden="true">
+      <div class="tiles" id="tiles"></div>
+      <svg class="gauge" id="gauge" viewBox="0 0 300 300">
+        <circle class="g-face" cx="150" cy="150" r="146"/>
+        <g id="g-arcs"></g>
+        <g id="g-ticks"></g>
+        <text class="g-unit" x="150" y="100" text-anchor="middle">CURSOR SPEED</text>
+        <g id="g-needle"><path class="g-needle" d="M144.5 156 150 40l5.5 116z"/></g>
+        <circle class="g-hub" cx="150" cy="150" r="14"/>
+        <circle class="g-pin" cx="150" cy="150" r="4"/>
+        <text class="g-read" id="g-read" x="150" y="226" text-anchor="middle">0000</text>
+        <text class="g-unit" x="150" y="246" text-anchor="middle">PX / S</text>
+      </svg>
+    </div>
+    <div class="band__cap">
+      <span class="mono">each bubble is a message. hover to send a few more.</span>
+      <span class="mono band__read">cursor <b id="spd">0000</b> px/s <i></i> peak <b id="peak">0000</b></span>
+    </div>
+  </div>
+</section>
+
+<div class="gap"><div class="wrap"></div></div>
+
+<!-- ───────── the work ───────── -->
+<section class="sec" id="work">
+  <div class="wrap">
+    <header class="shead">
+      <h2 class="slug" data-type>the-work/</h2>
+      <span class="lab" data-scramble id="work-count">featured projects</span>
+    </header>
+
+    <div class="viewer is-off" id="viewer">
+      <div class="vlist">
+        <div id="vlist" role="tablist" aria-label="Featured projects" aria-orientation="vertical"></div>
+        <div class="vlist__more">
+          <a class="btn btn--ghost" href="#index"><span>Browse all repositories</span><svg class="arr" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M4 12 12 4M5.5 4H12v6.5" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></a>
+        </div>
+      </div>
+
+      <div class="stage" id="stage" role="tabpanel" aria-live="polite">
+        <div class="poster-wrap" id="poster-wrap"><div class="poster" id="poster"></div></div>
+        <div class="stage__head">
+          <h3 class="stage__title" id="st-title"></h3>
+          <div class="stage__nav">
+            <button class="sbtn" id="st-prev" type="button" aria-label="Previous project"><svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M13 8H3m4.5-4.5L3 8l4.5 4.5" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></button>
+            <button class="sbtn" id="st-next" type="button">Next <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M3 8h10M8.5 3.5 13 8l-4.5 4.5" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></button>
+          </div>
+        </div>
+        <div class="stage__body">
+          <p class="stage__desc" id="st-desc"></p>
+          <ul class="facts" id="st-facts"></ul>
+        </div>
+        <div class="cta2 stage__cta" id="st-cta"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="gap"><div class="wrap"></div></div>
+
+<!-- ───────── copilot studio agents ───────── -->
+<section class="sec" id="agents">
+  <div class="wrap">
+    <header class="shead">
+      <h2 class="slug" data-type>copilot-studio-agents/</h2>
+      <span class="lab" data-scramble id="agents-count">agent projects</span>
+    </header>
+    <p class="sec__intro">Agents built and tested in Copilot Studio, grouped by the harness they run on. Filter by harness, or open any card for the full write-up.</p>
+    <div class="hkey" id="hkey" role="group" aria-label="Filter by harness"></div>
+    <div class="agrid" id="agrid"></div>
+  </div>
+</section>
+
+<div class="gap"><div class="wrap"></div></div>
+
+<!-- ───────── marquee ───────── -->
+<div class="marquee" aria-hidden="true"><div class="marquee__track" id="marquee"></div></div>
+
+<!-- ───────── index ───────── -->
+<section class="sec" id="index">
+  <div class="wrap">
+    <header class="shead">
+      <h2 class="slug" data-type>all-repositories/</h2>
+      <span class="lab" data-scramble id="index-count">public repositories</span>
+    </header>
+    <div class="filters" id="filters" role="group" aria-label="Filter repositories"></div>
+    <div class="idx" id="idx"></div>
+  </div>
+</section>
+
+<div class="gap"><div class="wrap"></div></div>
+
+<!-- ───────── about ───────── -->
+<section class="sec" id="about">
+  <div class="wrap">
+    <div class="split about">
+      <div class="about__left">
+        <h2 class="slug" data-type>about/</h2>
+        <figure class="portrait rv" id="portrait">
+          <img id="avatar" alt="Portrait of Ryan Bowen" width="240" height="240" loading="lazy">
+          <figcaption class="mono">Ryan Bowen</figcaption>
+        </figure>
+        <dl class="specs mono" id="specs"></dl>
+      </div>
+      <div class="about__right">
+        <div class="about__copy rv">
+          <p class="about__lede">I'm Ryan, a Solution Architect.</p>
+          <p class="about__body">I've spent nine years as a Solution Architect, mostly on the Power Platform, starting with Power BI. Now I'm moving into agentic development: building capabilities with GitHub Copilot, Microsoft Copilot Cowork, Claude Code and Copilot Studio.</p>
+        </div>
+        <div class="prin">
+          <div class="prin__row rv"><span class="mono">01</span><div><h3>measure-it<b class="sl">/</b></h3><p>Real runs against real services. Not a simulation, and not a reading of the documentation.</p></div></div>
+          <div class="prin__row rv"><span class="mono">02</span><div><h3>show-the-working<b class="sl">/</b></h3><p>Prompts, source, costs and screenshots are published alongside the result.</p></div></div>
+          <div class="prin__row rv"><span class="mono">03</span><div><h3>say-what-broke<b class="sl">/</b></h3><p>Failed runs and unverified claims are labelled, not hidden.</p></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ───────── footer ───────── -->
+<footer class="foot">
+  <div class="gap"><div class="wrap"></div></div>
+  <div class="wrap">
+    <div class="foot__mark" data-fit><div class="wm" aria-hidden="true">RYAN BOWEN</div></div>
+    <div class="foot__links">
+      <span class="mono foot__copy">© 2026 Ryan Bowen</span>
+      <a href="https://github.com/RyanBowie" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://github.com/RyanBowie?tab=repositories" target="_blank" rel="noopener">Repositories</a>
+      <span class="nav__sp"></span>
+      <a href="#top">Back to top ↑</a>
+    </div>
+
+    <div class="botzone" id="hello">
+      <div class="botstage" id="botstage">
+        <div class="bubble" id="bubble" aria-hidden="true">
+          <span class="bubble__who" id="bubble-who">b230/</span>
+          <span class="bubble__text"><span class="ghost"></span><span class="typed"></span></span>
+        </div>
+        <button class="bot" id="bot" type="button" aria-label="Poke B230, the robot">
+          <svg class="bot__svg" viewBox="0 0 240 300" aria-hidden="true" focusable="false">
+            <g class="bot__body">
+              <g class="b-arm" id="bot-arm"><rect x="190" y="212" width="24" height="64" rx="12"/></g>
+              <rect class="b-arm" x="26" y="212" width="24" height="64" rx="12"/>
+              <rect class="b-torso" x="48" y="196" width="144" height="130" rx="32"/>
+              <rect class="b-panel" x="82" y="224" width="76" height="48" rx="8"/>
+              <g class="b-bars">
+                <rect class="bar bar--1" x="91" y="250" width="9" height="14" style="--i:0"/>
+                <rect class="bar bar--2" x="104" y="238" width="9" height="26" style="--i:1"/>
+                <rect class="bar bar--3" x="117" y="244" width="9" height="20" style="--i:2"/>
+                <rect class="bar bar--4" x="130" y="232" width="9" height="32" style="--i:3"/>
+                <rect class="bar bar--5" x="143" y="246" width="9" height="18" style="--i:4"/>
+              </g>
+              <rect class="b-neck" x="104" y="182" width="32" height="22" rx="6"/>
+              <g class="b-headgrp" id="bot-head">
+                <g class="b-ant"><line x1="120" y1="74" x2="120" y2="38"/><circle cx="120" cy="28" r="11"/></g>
+                <rect class="b-ear" x="26" y="112" width="18" height="38" rx="9"/>
+                <rect class="b-ear" x="196" y="112" width="18" height="38" rx="9"/>
+                <rect class="b-head" x="40" y="70" width="160" height="124" rx="42"/>
+                <rect class="b-face" x="56" y="88" width="128" height="88" rx="30"/>
+                <circle class="b-cheek" cx="78" cy="150" r="8"/>
+                <circle class="b-cheek" cx="162" cy="150" r="8"/>
+                <g class="b-eye"><ellipse class="b-white" cx="94" cy="122" rx="17" ry="21"/><g class="b-pupil"><circle cx="94" cy="124" r="10"/><circle class="b-glint" cx="90" cy="119" r="3.2"/></g></g>
+                <g class="b-eye"><ellipse class="b-white" cx="146" cy="122" rx="17" ry="21"/><g class="b-pupil"><circle cx="146" cy="124" r="10"/><circle class="b-glint" cx="142" cy="119" r="3.2"/></g></g>
+                <path class="b-mouth" d="M106 153q14 10 28 0"/>
+                <ellipse class="b-mouth-o" cx="120" cy="157" rx="9" ry="7"/>
+              </g>
+            </g>
+          </svg>
+        </button>
+        <p class="sr-only" id="bot-live" aria-live="polite"></p>
+      </div>
+      <div class="bot__hud">
+        <div>
+          <h2 class="bot__title">meet-b230<b class="sl">/</b></h2>
+          <span class="mono">poke the robot for a random LLM fact or joke. no repeats until it has told them all.</span>
+        </div>
+        <div class="bot__right">
+          <span class="mono bot__counts" id="bot-counts" hidden title="Anonymous totals across all visitors. Nothing personal is stored.">everyone: <b id="cnt-facts">0</b> facts <i></i> <b id="cnt-jokes">0</b> jokes</span>
+          <span class="mono">you: <b id="bot-count">0</b></span>
+          <button class="sbtn sbtn--poke" id="bot-btn" type="button">Poke B230</button>
+        </div>
+      </div>
+    </div>
+
+    <p class="fine mono">Community projects, shared as is under the MIT licence. Not Microsoft products, and not supported or endorsed by Microsoft or GitHub. Layout inspired by githubuniverse.com. Code and artwork on this page are original. Company and product names in B230's facts and jokes belong to their owners, and no affiliation is implied. The facts were checked on 15 Nov 2026 and may go out of date; the jokes are just jokes.</p>
+  </div>
+</footer>
+
+<script src="assets/data.js"></script>
+<script src="assets/main.js"></script>
+</body>
+</html>
