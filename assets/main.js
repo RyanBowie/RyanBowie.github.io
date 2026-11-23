@@ -572,127 +572,6 @@
     $('#specs').innerHTML = specs.map(([k, v]) => `<dt>${k}</dt><dd>${esc(v)}</dd>`).join('');
   }
 
-  /* ─────────────── B230: a robot that watches the cursor and tells random LLM facts and jokes ─────────────── */
-  function initBot() {
-    const stage = $('#botstage'), bot = $('#bot'), head = $('#bot-head'), arm = $('#bot-arm');
-    const eyes = $$('.b-eye', bot), pupils = $$('.b-pupil', bot);
-    const bubble = $('#bubble'), who = $('#bubble-who'), ghost = $('.ghost', bubble), typed = $('.typed', bubble), live = $('#bot-live');
-    const btn = $('#bot-btn'), you = $('#bot-count'), countsEl = $('#bot-counts'), cf = $('#cnt-facts'), cj = $('#cnt-jokes');
-    const B = D.bot, items = B.items.map(([k, t, s]) => ({ k, t, s }));
-    let yours = 0, visible = false, greeted = false, lastMove = 0, typer = 0, hider = 0, queued = false, px = 0, py = 0;
-
-    // a shuffled bag: random order, nothing repeats until every item has been told, and never the same one twice running
-    let bag = [], lastIdx = -1;
-    const pick = () => {
-      if (!bag.length) {
-        bag = items.map((_, i) => i);
-        for (let i = bag.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [bag[i], bag[j]] = [bag[j], bag[i]]; }
-        if (bag.length > 1 && bag[bag.length - 1] === lastIdx) [bag[0], bag[bag.length - 1]] = [bag[bag.length - 1], bag[0]];
-      }
-      lastIdx = bag.pop();
-      return items[lastIdx];
-    };
-
-    // shared counters: totals across all visitors, kept by the small Worker in counter-worker/ (hidden until it answers)
-    const API = (B.counterUrl || '').replace(/\/+$/, '');
-    const counts = { fact: 0, joke: 0 };
-    let ready = false, lastPost = 0, seq = 0, applied = 0;
-    const fmtN = n => n.toLocaleString('en-GB');
-    const paint = bump => {
-      cf.textContent = fmtN(counts.fact);
-      cj.textContent = fmtN(counts.joke);
-      if (bump) { const el = bump === 'fact' ? cf : cj; el.classList.remove('tick'); void el.offsetWidth; el.classList.add('tick'); }
-    };
-    const loadCounts = () => {
-      if (!API) return;
-      fetch(API + '/counts').then(r => (r.ok ? r.json() : Promise.reject()))
-        .then(d => { counts.fact = +d.facts || 0; counts.joke = +d.jokes || 0; ready = true; countsEl.hidden = false; paint(); })
-        .catch(() => {});
-    };
-    const report = kind => {
-      if (!ready) return;
-      const now = performance.now();
-      if (now - lastPost < 700) return;                          // a burst of clicks counts once, like the server's rate limit
-      lastPost = now;
-      counts[kind]++; paint(kind);                               // show the poke being sent straight away
-      const mine = ++seq;
-      fetch(API + '/poke', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ kind }) })
-        .then(r => (r.ok ? r.json() : Promise.reject()))
-        .then(d => { if (mine < applied) return; applied = mine; counts.fact = +d.facts || 0; counts.joke = +d.jokes || 0; paint(); })
-        .catch(() => { counts[kind]--; paint(); });             // not recorded, so take it back off the display
-    };
-
-    // eyes and head follow a point, given as a vector from the robot's face
-    const look = (vx, vy) => {
-      const d = Math.hypot(vx, vy) || 1, k = Math.min(1, d / 240);
-      const x = vx / d * k, y = vy / d * k;
-      pupils.forEach(p => { p.style.transform = `translate(${(x * 6).toFixed(2)}px, ${(y * 8).toFixed(2)}px)`; });
-      head.style.transform = `translate(${(x * 4).toFixed(2)}px, ${(y * 2).toFixed(2)}px) rotate(${(x * 6).toFixed(2)}deg)`;
-    };
-    addEventListener('pointermove', e => {
-      lastMove = performance.now();
-      px = e.clientX; py = e.clientY;
-      if (!visible || queued) return;
-      queued = true;
-      requestAnimationFrame(() => {
-        queued = false;
-        const r = bot.getBoundingClientRect();
-        look(px - (r.left + r.width / 2), py - (r.top + r.height * 0.42));
-      });
-    }, { passive: true });
-
-    // no pointer (touch, or the mouse went quiet): glance around now and then
-    setInterval(() => {
-      if (visible && performance.now() - lastMove > 2600) look((Math.random() - 0.5) * 640, (Math.random() - 0.3) * 320);
-    }, 2600);
-
-    const blink = () => {
-      if (visible && !reduce) {
-        eyes.forEach(e => e.classList.add('blink'));
-        setTimeout(() => eyes.forEach(e => e.classList.remove('blink')), 130);
-      }
-      setTimeout(blink, 2200 + Math.random() * 3400);
-    };
-    setTimeout(blink, 1800);
-
-    const hop = () => {
-      bot.classList.remove('is-hop'); void bot.offsetWidth; bot.classList.add('is-hop');
-      arm.classList.remove('is-wave'); arm.getBoundingClientRect(); arm.classList.add('is-wave');
-    };
-    bot.addEventListener('animationend', e => { if (e.target === bot) bot.classList.remove('is-hop'); });
-
-    // `byUser` is false for the one automatic greeting, which is never counted
-    const speak = byUser => {
-      const it = pick();
-      clearTimeout(hider); clearInterval(typer);
-      who.textContent = `b230/ · ${it.k} · ${B.topics[it.t] || it.t}`;
-      ghost.textContent = it.s;
-      typed.textContent = '';
-      live.textContent = `${it.k}: ${it.s}`;
-      bubble.classList.add('on');
-      hop();
-      if (byUser) { yours++; you.textContent = yours; report(it.k); }
-      if (reduce) {
-        typed.textContent = it.s;
-      } else {
-        bot.classList.add('is-talking');
-        let i = 0;
-        typer = setInterval(() => {
-          typed.textContent = it.s.slice(0, ++i);
-          if (i >= it.s.length) { clearInterval(typer); bot.classList.remove('is-talking'); }
-        }, 18);
-      }
-      hider = setTimeout(() => bubble.classList.remove('on'), 5200 + it.s.length * 45);
-    };
-    bot.addEventListener('click', () => speak(true));
-    btn.addEventListener('click', () => speak(true));
-
-    new IntersectionObserver(([e]) => {
-      visible = e.isIntersecting;
-      if (visible && !greeted) { greeted = true; loadCounts(); setTimeout(() => speak(false), 500); }
-    }, { threshold: 0.45 }).observe(stage);
-  }
-
   /* ─────────────── project explorer: opens a project site inside the page, just under Work ─────────────── */
   function initExplore() {
     const panel = $('#explore'), frame = $('#explore-frame'), name = $('#explore-name');
@@ -738,6 +617,6 @@
   }
 
   /* ─────────────── boot ─────────────── */
-  const boot = [initTheme, initTicker, initWordmarks, initViewer, initMarquee, initAgents, initIndex, initAbout, initReveals, initBand, initNav, initBot, initExplore];
+  const boot = [initTheme, initTicker, initWordmarks, initViewer, initMarquee, initAgents, initIndex, initAbout, initReveals, initBand, initNav, initExplore];
   boot.forEach(fn => { try { fn(); } catch (err) { console.error('[site] ' + fn.name + ' failed:', err); } });
 })();

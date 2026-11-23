@@ -306,7 +306,7 @@ html.js .hero .wm .ch { animation: ch-in .9s var(--ease) backwards; animation-de
 
 .band__cap { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding: 12px var(--pad); border-top: 1px solid var(--line); color: var(--muted); }
 .band__read b { color: var(--ink); }
-.band__read i, .bot__right i { display: inline-block; width: 6px; height: 6px; margin: 0 8px 1px; background: var(--accent-fill); }
+.band__read i { display: inline-block; width: 6px; height: 6px; margin: 0 8px 1px; background: var(--accent-fill); }
 
 /* ───────────────────────── work viewer ───────────────────────── */
 .viewer { display: grid; grid-template-columns: minmax(280px, 31%) 1fr; border-top: 1px solid var(--line); }
@@ -574,115 +574,6 @@ html.js .hero .wm .ch { animation: ch-in .9s var(--ease) backwards; animation-de
 .foot__links > a:last-child { border-right: 0; border-left: 1px solid var(--line); }
 .foot__copy { color: var(--muted); }
 
-/* ───────────────────────── B230 the robot ───────────────────────── */
-.botzone { scroll-margin-top: calc(var(--nav-h) + 24px); border-top: 1px solid var(--line); }
-.botstage {
-  --bot-w: clamp(190px, 21vw, 270px);
-  --bot-r: clamp(16px, 9vw, 150px);
-  position: relative; overflow: hidden;
-  height: clamp(250px, 30vw, 330px);
-  background-image:
-    linear-gradient(color-mix(in srgb, var(--line) 60%, transparent) 1px, transparent 1px),
-    linear-gradient(90deg, color-mix(in srgb, var(--line) 60%, transparent) 1px, transparent 1px);
-  background-size: 16px 16px;
-  background-position: -1px -1px;
-}
-.bot {
-  position: absolute; right: var(--bot-r); bottom: 0; z-index: 1;
-  width: var(--bot-w); aspect-ratio: 240 / 300;
-  translate: 0 10%;
-  cursor: pointer; touch-action: manipulation;
-  transform-origin: 50% 100%;
-}
-.bot__svg { display: block; width: 100%; height: 100%; overflow: visible; }
-.bot.is-hop { animation: bot-hop .55s var(--ease); }
-@keyframes bot-hop {
-  0%   { transform: scale(1, 1); }
-  22%  { transform: scale(1.05, .93); }
-  55%  { transform: translateY(-16px) scale(.97, 1.05); }
-  100% { transform: none; }
-}
-.bot__body { animation: bot-bob 3.4s ease-in-out infinite; }
-@keyframes bot-bob { 50% { transform: translateY(-4px); } }
-
-/* the robot wears the site's accent colour: limbs take the strong tone, the face and panel the bright one */
-.bot { --bot-limb: var(--a); }
-:root[data-theme="dark"] .bot { --bot-limb: color-mix(in srgb, var(--a-soft) 62%, var(--c-night)); }
-.b-torso, .b-head { fill: var(--c-night); stroke: var(--ink); stroke-width: 3; }
-.b-neck { fill: var(--bot-limb); stroke: var(--ink); stroke-width: 3; transition: fill .35s; }
-.b-arm, .b-arm rect, .b-ear { fill: var(--bot-limb); stroke: var(--ink); stroke-width: 3; transition: fill .35s; }
-.b-panel { fill: #0f0a1c; stroke: var(--a-soft); stroke-width: 2; transition: stroke .35s; }
-.b-face { fill: var(--a-soft); transition: fill .35s; }
-.b-cheek { fill: var(--c-pink); opacity: .5; }
-.b-white { fill: #fff; }
-.b-pupil circle { fill: var(--c-night); }
-.b-pupil .b-glint { fill: #fff; }
-.b-pupil { transition: transform .12s ease-out; }
-.b-eye { transform-box: fill-box; transform-origin: center; transition: transform .07s; }
-.b-eye.blink { transform: scaleY(.08); }
-.b-mouth { fill: none; stroke: var(--c-night); stroke-width: 4.5; stroke-linecap: round; }
-.b-mouth-o { fill: var(--c-night); display: none; transform-box: fill-box; transform-origin: center; }
-.bot.is-talking .b-mouth { display: none; }
-.bot.is-talking .b-mouth-o { display: block; animation: bot-mouth .2s ease-in-out infinite alternate; }
-@keyframes bot-mouth { from { transform: scaleY(.45); } to { transform: scaleY(1.1); } }
-.b-headgrp { transform-origin: 120px 194px; transition: transform .22s ease-out; }
-.b-ant { transform-origin: 120px 74px; animation: bot-sway 2.6s ease-in-out infinite alternate; }
-.b-ant line { stroke: var(--ink); stroke-width: 4; stroke-linecap: round; }
-.b-ant circle { fill: var(--accent-fill); stroke: var(--ink); stroke-width: 3; transition: fill .3s; }
-.bot:hover .b-ant { animation-duration: .5s; }
-@keyframes bot-sway { from { transform: rotate(-5deg); } to { transform: rotate(5deg); } }
-#bot-arm { transform-origin: 202px 226px; }
-#bot-arm.is-wave { animation: bot-wave .95s ease-in-out; }
-@keyframes bot-wave {
-  0%, 100% { transform: rotate(0); }
-  20% { transform: rotate(-150deg); }
-  35% { transform: rotate(-124deg); }
-  50% { transform: rotate(-156deg); }
-  65% { transform: rotate(-124deg); }
-  80% { transform: rotate(-150deg); }
-}
-.bar { transform-box: fill-box; transform-origin: 50% 100%; }
-.bar--1 { fill: var(--c-mint); } .bar--2 { fill: var(--c-pink); } .bar--3 { fill: var(--c-lav); }
-.bar--4 { fill: var(--c-olive); } .bar--5 { fill: var(--c-blue); }
-.bot.is-talking .bar { animation: bot-bar .38s ease-in-out infinite alternate; animation-delay: calc(var(--i) * 70ms); }
-@keyframes bot-bar { from { transform: scaleY(.45); } to { transform: scaleY(1.15); } }
-
-.bubble {
-  --ty: -50%;
-  position: absolute; z-index: 2;
-  right: calc(var(--bot-r) + var(--bot-w) * .76);
-  top: 50%; translate: 0 var(--ty);
-  max-width: min(380px, calc(100% - var(--bot-r) - var(--bot-w) * .76 - var(--pad)));
-  padding: 14px 16px;
-  background: var(--card); color: var(--ink);
-  border: 2px solid var(--ink); border-radius: 4px;
-  font-family: var(--mono); font-size: 13px; line-height: 1.5;
-  opacity: 0; pointer-events: none;
-  transition: opacity .25s, translate .3s var(--ease);
-}
-.bubble.on { opacity: 1; }
-.bubble:not(.on) { translate: 10px var(--ty); }
-.bubble::after {
-  content: ""; position: absolute; right: -8px; top: 50%;
-  width: 12px; height: 12px;
-  background: var(--card);
-  border-top: 2px solid var(--ink); border-right: 2px solid var(--ink);
-  rotate: 45deg; translate: 0 -50%;
-}
-.bubble__who { display: block; margin-bottom: 6px; color: var(--accent-text); font-weight: 700; }
-.bubble__text { display: grid; }
-.bubble__text > * { grid-area: 1 / 1; }
-.bubble__text .ghost { visibility: hidden; }
-
-.bot__hud { display: flex; justify-content: space-between; align-items: center; gap: 16px 24px; flex-wrap: wrap; padding: 16px var(--pad); border-top: 1px solid var(--line); background: var(--paper); color: var(--muted); }
-.bot__title { font-size: 26px; font-weight: 460; letter-spacing: -.025em; line-height: 1.15; color: var(--ink); margin-bottom: 2px; }
-.bot__right { display: flex; align-items: center; gap: 20px; }
-.bot__right b { color: var(--ink); }
-.sbtn--poke { min-width: 132px; }
-.bot__right { flex-wrap: wrap; }
-.bot__counts b { display: inline-block; }
-.bot__counts b.tick { animation: bot-tick .45s var(--ease); }
-@keyframes bot-tick { 40% { color: var(--accent-text); transform: translateY(-3px); } }
 .sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
 .fine { padding: 20px var(--pad) 28px; border-top: 1px solid var(--line); color: var(--muted); font-size: 12px; line-height: 1.6; max-width: none; }
 
@@ -757,9 +648,6 @@ html.js .hero .wm .ch { animation: ch-in .9s var(--ease) backwards; animation-de
   .foot__links > * { padding: 0 14px; }
   .foot__links .nav__sp { display: none; }
   .foot__links > a:last-child { border-left: 0; }
-  .botstage { --bot-w: 150px; --bot-r: 6px; height: 270px; }
-  .bubble { --ty: 0px; top: 14px; right: calc(var(--bot-r) + var(--bot-w) * .8); max-width: calc(100% - var(--bot-r) - var(--bot-w) * .8 - 14px); padding: 12px 14px; font-size: 12.5px; }
-  .bot__right { width: 100%; justify-content: space-between; }
 }
 
 /* ───────────────────────── reduced motion ───────────────────────── */
