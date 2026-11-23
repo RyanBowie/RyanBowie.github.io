@@ -317,6 +317,10 @@
         return `<rect x="0" y="${y}" width="400" height="${bh}" fill="currentColor" opacity=".14"/><rect x="0" y="${y}" width="${n * 40}" height="${bh}" fill="${i === 0 ? 'var(--alt)' : 'currentColor'}"/>`;
       }).join('')}</svg>`;
     },
+    // a twin-spired cathedral silhouette (used only if the cathedral screenshot can't load)
+    towers() {
+      return `<svg viewBox="0 0 400 400"><path d="M70 150L110 18L150 150Z M250 150L290 18L330 150Z" fill="currentColor"/><rect x="70" y="150" width="80" height="210" fill="currentColor"/><rect x="250" y="150" width="80" height="210" fill="currentColor"/><rect x="150" y="250" width="100" height="110" fill="currentColor"/><path d="M0 362H400" stroke="currentColor" stroke-width="4"/><rect x="100" y="190" width="20" height="60" fill="var(--alt)"/><rect x="280" y="190" width="20" height="60" fill="var(--alt)"/><path d="M180 360v-54a20 20 0 0 1 40 0v54z" fill="var(--alt)"/></svg>`;
+    },
     // the five historical reference manuals in the engineering-evidence corpus, by page count (the 392-page one is fully scanned)
     pages() {
       const v = [476, 449, 448, 392, 205];
@@ -371,8 +375,10 @@
     const clip = m =>
       `<a class="clip" href="${m.live}" target="_blank" rel="noopener" aria-label="Open the live ${esc(m.label)} result">
         <span class="clip__bar"><span>${esc(m.label)}</span><span>${esc(m.tag)}</span></span>
-        <video class="clip__video" src="${m.video}" poster="${m.still}" muted loop playsinline preload="metadata"${reduce ? '' : ' autoplay'}></video>
-        <span class="clip__bar clip__bar--foot"><span>unedited model output</span><span>play with it ${ARROW}</span></span>
+        ${m.video
+          ? `<video class="clip__video" src="${m.video}" poster="${m.still}" muted loop playsinline preload="metadata"${reduce ? '' : ' autoplay'}></video>`
+          : `<img class="clip__video" src="${m.still}" alt="">`}
+        <span class="clip__bar clip__bar--foot"><span>${esc((m.foot || [])[0] || 'unedited model output')}</span><span>${esc((m.foot || [])[1] || 'play with it')} ${ARROW}</span></span>
       </a>`;
 
     list.innerHTML = feats.map((r, i) => {
@@ -420,7 +426,7 @@
       poster.classList.toggle('poster--clip', !!f.media);
       if (f.media) {
         const art = $('.poster__art', poster);
-        $('video', art).addEventListener('error', () => { art.className = 'poster__art'; art.innerHTML = ART[f.art](); });
+        $('video, img', art).addEventListener('error', () => { art.className = 'poster__art'; art.innerHTML = ART[f.art](); });
         playClip(!viewer.classList.contains('is-off'));
       }
       poster.classList.remove('wipe');
@@ -542,7 +548,7 @@
     const specs = [
       ['role', 'Solution Architect'],
       ['experience', '9 years'],
-      ['focus', 'Power Platform, agents'],
+      ['focus', 'AI models, harnesses, agents'],
       ['on github since', D.owner.since],
       ['public repositories', D.repos.length]
     ];

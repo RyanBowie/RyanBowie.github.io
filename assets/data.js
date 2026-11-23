@@ -397,6 +397,28 @@ window.SITE = {
       }
     },
     {
+      name: 'cathedral-benchmarks',
+      title: 'Cathedral Benchmarks',
+      desc: 'Interactive 3D Cologne Cathedral managed-app benchmarks: one research pack, one prompt, many AI models.',
+      lang: 'JavaScript', ext: '.js', cat: 'benchmark', pushed: '2026-11-20',
+      site: 'https://ryanbowie.github.io/cathedral-benchmarks/',
+      feature: {
+        order: 1.5, kicker: 'Sister benchmark', stat: '7.5/10',
+        cap: 'is the best Cologne Cathedral so far. One research pack, seven models.',
+        blurb: 'One research pack and one fixed prompt, given to seven AI models. Each builds an interactive 3D Cologne Cathedral as a managed app in Copilot Managed Runtime, and every build is also published as a static mirror you can explore. Functional and visual scores are reported separately, and a pass needs 85 and 80.',
+        facts: ['7 models', 'Functional and visual scores', 'Built in Copilot Managed Runtime', '33,772 credits across all runs'],
+        art: 'towers', bg: '#009cff', fg: '#180e27', alt: '#ffffff',
+        // the best build's preview image, a local copy from the cathedral-benchmarks repo; `live` opens its static mirror
+        media: {
+          label: 'GPT-6 Astra · GitHub Copilot app',
+          tag: '7.5 / 10',
+          still: 'assets/media/cathedral-gpt-6-astra.jpg',
+          live: 'https://ryanbowie.github.io/cathedral-benchmarks/builds/gpt-6-astra/',
+          foot: ['model-built 3D cathedral', 'explore it']
+        }
+      }
+    },
+    {
       name: 'copilot-cowork-app-benchmark',
       title: 'Copilot Cowork managed-app benchmark',
       desc: 'Evidence-led Copilot Cowork managed-app costs, time, capabilities and model/effort comparisons.',
