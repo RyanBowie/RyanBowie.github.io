@@ -52,17 +52,46 @@
 
   /* ─────────────── ticker ─────────────── */
   function initTicker() {
-    const latest = [...D.repos].sort((a, b) => b.pushed.localeCompare(a.pushed))[0];
     const msg = $('#ticker-msg');
-    msg.textContent = `latest push: ${latest.name}, ${fmtDate(latest.pushed)} ↗`;
-    if (latest.site) {
-      msg.href = siteHref(latest.site);
-      msg.dataset.explore = latest.site;
-      msg.dataset.label = latest.title;
-      msg.removeAttribute('target');
-    } else {
-      msg.href = repoUrl(latest);
-    }
+    const show = (name, pushed) => {
+      const known = D.repos.find(r => r.name === name) || { name };
+      msg.textContent = `latest push: ${name}, ${fmtDate(pushed)} ↗`;
+      if (known.site) {
+        msg.href = siteHref(known.site);
+        msg.dataset.explore = known.site;
+        msg.dataset.label = known.title;
+        msg.removeAttribute('target');
+      } else {
+        msg.href = repoUrl(known);
+        delete msg.dataset.explore;
+        delete msg.dataset.label;
+        msg.target = '_blank';
+      }
+    };
+
+    // the data.js snapshot renders instantly and stays as the fallback if GitHub can't be reached
+    const snap = [...D.repos].sort((a, b) => b.pushed.localeCompare(a.pushed))[0];
+    show(snap.name, snap.pushed);
+
+    // then the live latest push from GitHub; cached for 10 min to stay well inside the unauthenticated rate limit
+    const KEY = 'rb-latest-push', TTL = 10 * 60 * 1000;
+    const apply = r => { if (r && r.pushed >= snap.pushed) show(r.name, r.pushed); };
+    let cached = null;
+    try { cached = JSON.parse(store.get(KEY)); } catch (e) {}
+    if (cached && Date.now() - cached.at < TTL) return apply(cached);
+
+    const site = `${D.owner.handle}.github.io`.toLowerCase();
+    fetch(`https://api.github.com/users/${D.owner.handle}/repos?sort=pushed&per_page=10&type=owner`, { headers: { Accept: 'application/vnd.github+json' } })
+      .then(res => res.ok ? res.json() : Promise.reject(res.status))
+      .then(list => {
+        // skip this site's own repo, forks and archived repos: the ticker is about project work
+        const top = list.find(r => !r.fork && !r.archived && !r.private && r.name.toLowerCase() !== site);
+        if (!top) return;
+        const r = { name: top.name, pushed: top.pushed_at.slice(0, 10), at: Date.now() };
+        store.set(KEY, JSON.stringify(r));
+        apply(r);
+      })
+      .catch(err => console.warn('[site] live latest push unavailable, showing snapshot:', err));
   }
 
   /* ─────────────── nav ─────────────── */
